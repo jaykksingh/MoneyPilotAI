@@ -21,7 +21,7 @@ Our API is the only way in, so turn off what Supabase exposes by default:
    - **Allow new users to sign up:** on for now.
 3. **Authentication → Multi-Factor:** enable **TOTP (Authenticator app)**.
 4. **Hardening the codes (WP-33 security review).** The API limits guesses, but keep Supabase's own limits tight too:
-   - **Authentication → Sign In / Providers → Email:** set **Email OTP Length** to **8** and **Email OTP Expiration** to **900 seconds** (15 minutes) or less.
+   - **Authentication → Sign In / Providers → Email:** set **Email OTP Length** to **6** (the app's screens ask for a 6-digit code; owner decision, 2026-11-21) and **Email OTP Expiration** to **900 seconds** (15 minutes) or less.
    - **Project Settings → JWT Keys (or Auth → Sessions):** set the **access token expiry** to **3600 seconds** (1 hour) or less. Our step-up checks use the token's `amr` timestamps, not this, but a shorter token limits a stolen one.
 5. **Project Settings → API Keys:**
    - Copy the **publishable** key and the **secret** key. Both are server-side only and go into `.env.local`, never into web or mobile code.
@@ -204,7 +204,7 @@ Do these on the real project, with throwaway accounts, before anyone but you sig
    ```
    **Expected:** `clean` three times. For the mobile app, do the same search on its bundle when it exists.
 3. **Google account-linking pre-hijack** (section 4, step 6): done and passing.
-4. The email templates and passwordless settings in section 3 are done, and **Email OTP Length** is 8.
+4. The email templates and passwordless settings in section 3 are done, and **Email OTP Length** is 6.
 
 ## Troubleshooting
 | Symptom | Cause and fix |
