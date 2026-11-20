@@ -49,11 +49,12 @@ The exact values are in `design/tokens.json`. This section covers how to use the
 - **Manrope** (600/700/800) for headings and every money amount shown as a figure. **Inter** (400/500/600) for everything else. Load only these weights.
 - Every amount, date and count uses `font-variant-numeric: tabular-nums` (`fontVariant: ['tabular-nums']` in React Native).
 - Scale tokens: `display-xl` 52, `display-l` 44, `amount-xl` 34, `heading-1` 32, `amount-l` 28, `heading-1m` 26, `heading-3` 22, `heading-2` 18, `heading-2m` 16, `title` 15/600, `body-l` 15, `body` 14, `small` 13, `caption` 12, `overline` 12/600 uppercase +0.08em, `micro` 11, `nano` 10/700 uppercase +0.06em (cell labels such as PAYDAY).
+- Landing and sign-in only (§5.1.1, §5.1.2): `display-2xl` 64/68 (landing hero headline, −0.03em), `heading-xl` 44/50 (landing section headings and the sign-in brand panel headline, −0.02em), and `lead` 18/28 (landing intro and section leads). The app screens never use them.
 - Table headers: 11 px, weight 600, uppercase, +0.06em, `text.muted`.
 - Display sizes (Manrope 800) use −0.02em tracking, and the two hero amounts use −0.03em.
 
 ### 2.3 Spacing, radius, elevation
-- **Spacing** uses a 4 px base with 2 px half-steps: 2, 4, 6, 8, 10, 12, 14, 16, 20, 22, 24, 28, 40, 56. Nothing else.
+- **Spacing** uses a 4 px base with 2 px half-steps: 2, 4, 6, 8, 10, 12, 14, 16, 20, 22, 24, 28, 40, 56. Nothing else. The landing page adds 72 (`space.18`) and 96 (`space.24`) for section padding, so its sections breathe; the app screens don't use them.
 - **Radius:** xs 6 (chart bars, calendar chips), sm 8 (segments), md 10 (buttons, inputs, nav items), lg 12 (calendar cells), xl 14 (inner cards, radio cards, mobile bottom-bar button), 2xl 16 (mobile cards), 3xl 18 (web cards, web hero), 4xl 20 (mobile hero), full (chips, pills, avatars).
 - **Elevation:** the UI is flat, with surfaces separated by a 1 px `border.default`. The only shadows are `shadow.selected` (selected segment and the switch knob) and `shadow.overlay` (menus, dialogs, toasts).
 
@@ -66,7 +67,23 @@ The exact values are in `design/tokens.json`. This section covers how to use the
 - No emoji anywhere in the UI.
 
 ### 2.5 Motion
-150 ms ease-out (`cubic-bezier(0,0,0.2,1)`), animating opacity and color only. No motion when `prefers-reduced-motion` is set. There are no spinners inside cards; use skeletons (§5.3).
+150 ms ease-out (`cubic-bezier(0,0,0.2,1)`), animating opacity and color only, plus the transforms of the feedback motion in §2.5.2. No motion when `prefers-reduced-motion` is set. There are no spinners inside cards; use skeletons (§5.3).
+
+#### 2.5.1 Landing and sign-in motion · owner-approved 2026-11-21
+The public pages (landing, sign in, create account) are richer, by owner request. The rule above still holds for every app screen.
+- **Tokens:** `motion.reveal` 700 ms (entrances and scroll reveals), `motion.stagger` 80 ms (step between staggered items), `motion.loop` 6 s (one cycle of a looping illustration), `motion.ambient` 42 s (the bills ticker), `motion.easingEmphasis` `cubic-bezier(0.2,0.7,0.2,1)`. Delays are multiples of `motion.stagger`.
+- **Allowed:** opacity, transform (translate, scale, rotate) and stroke-dashoffset. Entrances rise 28 px and fade in, staggered top to bottom. Sections below the fold rise as they scroll into view (`animation-timeline: view()`; browsers without it show them at once). Looping illustrations (owner dots popping in, the runway line drawing, the owner split filling, floating activity chips, the travelling dot on How it works) run on `motion.loop`. Counting amounts count up from $0 to the engine's value; every frame goes through `packages/format` and screen readers get only the final amount.
+- **Resting state is the final frame.** Every animation sits inside `@media (prefers-reduced-motion: no-preference)`. With reduced motion nothing moves, nothing counts, and the rotating headline word stays on its first word.
+- **Never** animate layout (width, height, top/left) except the sign-up progress bar width and the How it works travelling dot, and never hide content that only an animation reveals.
+
+#### 2.5.2 Feedback motion, every screen · owner-approved 2026-11-21
+The app should feel alive: every action the user takes answers with motion. This applies to all screens, web and mobile, on top of the 150 ms rule above.
+- **Press:** anything tappable dips while pressed: buttons, icon buttons, links styled as buttons, segments, filter pills, stepper buttons, switches and tab-bar items scale to `motion.press` (0.97); larger surfaces (radio cards, calendar cells, list rows, sidebar items) to `motion.pressSoft` (0.985). It eases back on release over `motion.duration`.
+- **Busy:** a button that starts work shows it at once: a 16 px spinner takes the icon’s place, the label says what is happening (“Signing in…”, “Creating your account…”, “Saving…”), the button keeps its colors and ignores more presses (`aria-busy`). This is the one spinner allowed; content areas still use skeletons (§5.3).
+- **Error:** the form shakes once (about 400 ms) and the error banner drops in; a repeat error replays both. Typed values are never cleared.
+- **Success:** finishing a flow plays a short confirmation, at most about one second, before moving on. Signing in shows “You’re in” (a new account: “Welcome to MoneyPilot, {name}”) with a check mark that draws itself, a halo and a progress line, then opens the plan. Elsewhere use the `StatusBanner` drop-in, or the item’s own change (a count-up, a row leaving).
+- **New content** enters with a short rise and fade (§2.5.1 tokens) instead of appearing abruptly; step changes inside a flow replay it.
+- **Reduced motion:** press, shake, check and entrance motion are off; the busy label, banners and success text still appear, and the success moment shortens to a beat (300 ms).
 
 ---
 
@@ -100,11 +117,12 @@ Minimum touch target is 44 × 44. A 36 px control gets an invisible hit area. Th
 
 | Component | Spec |
 |---|---|
-| **Button: primary** | Web: height 40, padding-x 16, radius md, `brand.default` background, white text, `body` 600. Hover `brand.strong`. Mobile: height 46 inline or 50 in a bar, radius lg/xl, 15 px. Icons are 16 with a gap of 8. Only one primary button per region. |
+| **Button: primary** | Web: height 40, padding-x 16, radius md, `brand.default` background, white text, `body` 600. Hover `brand.strong`. Mobile: height 46 inline or 50 in a bar, radius lg/xl, 15 px. Icons are 16 with a gap of 8. Only one primary button per region. Landing calls to action use the large size: height 48 (`size.buttonHeightLarge`), padding-x 20, `title` (15/600). |
 | **Button: secondary** | Same size, `bg.surface`, 1 px `border.strong` (`border.default` in the page header), `text.primary`. Hover `bg.subtle`. |
 | **Button: text** | Transparent, `brand.default` 600. Hover adds an underline. |
 | **Button: icon** | 44 × 40 on web, 44 × 44 circle on mobile. `bg.surface` with a `border.default` border. `aria-label` is required. A notification dot is 8 px `attention.mark` with a 2 px white ring. |
 | **Disabled** | `bg.track` fill, `text.disabled`, no hover. |
+| **Busy** | Any variant: keeps its colors, a 16 px spinner (2 px ring in `currentColor`) replaces the icon, the label says what is happening, `aria-busy="true"`, presses ignored, `cursor: progress` (§2.5.2). |
 | **Button: destructive** | Secondary size with a 1 px `text.primary` border, and the label ends in “…” (“Delete household…”). It always opens a confirm dialog: delete needs the household name typed in, leave needs one confirm. Never red or amber. |
 | **Stepper** | Two 44 × 44 secondary buttons (radius md, “−” / “+”, `aria-label` such as “Increase by $25”) around an `<output aria-live="polite">` in `amount-l`. Step $25, minimum $0. A label sits above it, linked with `aria-labelledby`. |
 | **Segmented control** | The track is `bg.canvas` (or `bg.track` when it sits on the canvas), padding 3, radius md (lg on mobile). Segments: height 36, minimum width 64, radius sm, 13/600. Selected: `bg.surface` with `shadow.selected` and `text.primary`. Unselected: `text.muted` (`text.secondary` on the track). Set `aria-pressed` on each segment and `aria-label` on the group. |
@@ -158,7 +176,7 @@ The routes below are suggestions. Each screen lists its regions in order, the da
 
 ### 5.1 Web
 
-**Overview: `/`** (FR-02, FR-03, FR-04, FR-05, FR-10, Journey 2)
+**Overview: `/overview`** (FR-02, FR-03, FR-04, FR-05, FR-10, Journey 2)
 1. Header: overline with today’s date (“Tuesday, October 27”). Title “{N} days to payday. Here’s the plan.” Subtitle naming the household and payday. Actions: search input (180 px), notifications icon button, “Import CSV” (secondary), “Add bill or income” (primary).
 2. KPI row: hero “Safe to spend until {weekday, Mon D}” spanning 2 columns, with the per-day caption, the amount, and the breakdown “Lowest projected balance $X on {date} − Cushion $Y = $Z” plus a “See the math” link. Then a “Bills before payday” tile (total, count, owner split bar and amounts), and an “Income expected” tile (next income, then the following paycheck and goal transfer).
 3. Main column: the “Cash runway to payday” chart card (§4.1). Then the “Due before payday” table card with Both/Sam/Jordan segmented filter. Columns: Due (date + weekday), Bill (name + frequency), Owner (avatar + name), Status chip, Amount. A total row underneath. Filtering recalculates the total.
@@ -216,6 +234,27 @@ The routes below are suggestions. Each screen lists its regions in order, the da
 6. Aside: “Our promises” (hero colors, 5 bullets) and an Activity log (latest 5 entries: action at 13/600, then actor · timestamp at 12 px muted, plus “Download full log”).
 
 **Safe-to-spend states** (canvas board “Web · Safe-to-spend states”): the on-track and shortfall heroes side by side, the runway with negative bars, and the “Ways to cover the gap” card. See §5.3.
+
+#### 5.1.1 Landing: `/` · owner-approved 2026-11-21
+Proposal canvas: [MoneyPilot · Landing & sign-in](https://claude.ai/artifact/1KwyRrw6SrR9dNAxARZzSR), board “Web · Landing page”. Public; signed-in visitors see “Open MoneyPilot” (primary, to `/overview`) in place of the sign-in actions. Motion per §2.5.1. Content width 1200, side gutter 16 (40 from 800 px); sections are padded 96 (72 under 800 px) and the heading block sits 56 above its content.
+1. **Header:** logo mark (needle settles on load) and wordmark → links How it works · Privacy · Pricing (hidden under 800 px) → “Sign in” (text) and “Create account” (primary).
+2. **Hero:** `brand.tint` background with a 1 px `border.default` bottom rule, three large blurred color fields (`partnerA.soft`, `partnerB.soft`, `brand.soft`) that wander slowly, and a drifting `border.strong` dot grid on top. Left: eyebrow pill “For couples and families” (teal and plum dots, `brand.soft`) → `display-2xl` headline “See what’s coming before {payday. | rent. | daycare. | renewals.}” (the last word rotates in `brand.default`; screen readers read “payday.”; `heading-xl` under 800 px) → `lead` paragraph → “Create your household” (large primary, arrow nudges on hover) and “See how it works” (large secondary) → trust row: Never moves money · Read-only email · Two-step sign-in (16 px brand icons, `small` muted). Right: the product preview, a picture of the Overview (hidden from assistive tech, with a visually hidden sentence): household row, hero card (label, count-up amount in `display-xl`, per-day caption, 11-bar mini runway in the on-strong chart colors with the lowest bar pulsing, stats row), and an attention card. Three activity chips float around it (`shadow.overlay`): “Found in Sam’s email”, “Jordan marked Internet as paid”, and a “Price up $3” chip (hidden under 600 px).
+3. **Ticker:** overline “Every bill, subscription and renewal, found for you”, then a scrolling row of pills (bill and renewal types, each with an owner dot) that pauses on hover; edges fade.
+4. **Three answers** (`bg.canvas`): See what’s coming (mini calendar, owner dots popping in, payday tinted), Know what’s safe to spend (runway line drawing over the dashed cushion, lowest point pulsing with a “Lowest · $1,507” tooltip), Share the load (Sam and Jordan totals with the owner split bar filling).
+5. **How it works** (`#how`): a dashed rail with a travelling dot (hidden under 800 px), then 3 numbered cards: Create your household · Bring in your bills · Decide together, each with a small looping illustration.
+6. **Privacy** (`#privacy`, `brand.strong`): “It looks. It never touches.” and 4 bordered items (Never moves money · Read-only email · Last 4 digits only · Rules calculate, AI explains). A large outlined compass turns slowly behind.
+7. **Pricing** (`#pricing`): Monthly / Yearly segmented control, then Free ($0) and Family Plus ($7.99 per month, or $59.99 a year, about $5 a month) cards; Family Plus has a 2 px `brand.default` border on `brand.tint`. Prices come from BACKEND_PLAN §7.10. Partner sharing is not listed on either plan until that decision is made.
+8. **Closing card** (`brand.strong` on `bg.canvas`): 72 px logo mark with a swaying needle, “Get to payday, together.”, “Create your household” (large, white) and “Sign in”.
+9. **Footer:** small logo, “© 2026 MoneyPilot. A planning tool. It never moves money.”, links Privacy · Sign in · Create account.
+- **Golden values:** every number in the preview is the fixture’s (`apps/web/lib/landing/sample.ts`, pinned by its test): safe to spend $1,007 · ≈ $100 a day · lowest $1,507 on Nov 5 · cushion $500 · 8 bills $4,792.99 (Sam $1,793.99, Jordan $2,999.00) · car insurance $684.00 on Nov 4, $1,691 if moved to payday · runway per fixture.
+
+#### 5.1.2 Sign in and create account: `/sign-in`, `/sign-up` · owner-approved 2026-11-21
+Proposal canvas boards “Web · Sign in” and “Web · Create account”. A split screen: the form side (white) and the brand panel (`brand.strong`, drifting dot grid). Under 800 px the panel is hidden and the logo moves into the form’s top bar. The invite page keeps the centered card and shows these forms inside it.
+- **Form side:** top bar “Back to home” · “New to MoneyPilot? Create an account” (or “Already have an account? Sign in”). Then a 400 px column, vertically centered: heading (`heading-1`) and subtitle (`body-l` muted), then the form with 20 px between fields. Fields enter one after another (§2.5.1); changing step replays the entrance.
+- **Sign in:** “Welcome back” · “Sign in to see what’s coming before payday.” → “Continue with Google” (secondary, when enabled) → “or use your email” divider → Email → Password (Show/Hide toggle inside the field; “Forgot your password?” on the label row) → “Sign in” (primary, full width) → caption with a lock: “Read-only planning. MoneyPilot never moves money.” → “New to MoneyPilot? Create an account”. Authenticator step: 56 px phone icon tile, “Check your authenticator app”, a large centered code field (`amount-l`), “Verify”. Forgot and reset keep their existing steps.
+- **Create account:** a 3-step progress bar (Your account · Confirm email · Your household; the current step has `aria-current="step"`) → “Create your account” · “You can invite your partner after this.” → “Sign up with Google” → First name (hint: your partner sees it) → Email → Password with a 4-segment meter (Too short · Okay · Good · Strong; guidance only, the API enforces 8 to 72 characters) and an “8 or more characters” rule that gains a check. Confirm step: bouncing mail icon, “We sent a 6-digit code to {email}.”, large code field, “Confirm email”, then “Change email” and “Resend code” (after a 30 s countdown, “Resend in 0:30”).
+- **Brand panel, sign in:** “Your plan picked up where you left off.” and a white sample-plan card (count-up safe to spend in `amount-xl`, mini runway in chart colors, three bill rows sliding in), with chips “16 renewals found automatically” and “3 tasks due this week”. Footer: “Sample household shown. Your own numbers appear after you sign in.”
+- **Brand panel, create account:** “One plan for both of you, in three steps.”, a vertical timeline (Create your account · Bring in your bills · Invite your partner) whose line fills and dots light in turn, and an invitation chip. Footer: “MoneyPilot never moves money and never stores email bodies.”
 
 ### 5.2 Mobile
 

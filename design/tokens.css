@@ -82,6 +82,8 @@
   --mp-font-body: Inter, system-ui, sans-serif;
 
   /* Type scale: size / line-height */
+  --mp-type-display-2xl: 800 64px/68px var(--mp-font-display);
+  --mp-type-heading-xl: 800 44px/50px var(--mp-font-display);
   --mp-type-display-xl: 800 52px/52px var(--mp-font-display);
   --mp-type-display-l: 800 44px/44px var(--mp-font-display);
   --mp-type-amount-xl: 800 34px/38px var(--mp-font-display);
@@ -92,6 +94,7 @@
   --mp-type-heading-2: 700 18px/24px var(--mp-font-display);
   --mp-type-heading-2m: 700 16px/22px var(--mp-font-display);
   --mp-type-title: 600 15px/21px var(--mp-font-body);
+  --mp-type-lead: 400 18px/28px var(--mp-font-body);
   --mp-type-body-l: 400 15px/22px var(--mp-font-body);
   --mp-type-body: 400 14px/20px var(--mp-font-body);
   --mp-type-small: 400 13px/19px var(--mp-font-body);
@@ -120,6 +123,8 @@
   --mp-space-7: 28px;
   --mp-space-10: 40px;
   --mp-space-14: 56px;
+  --mp-space-18: 72px;
+  --mp-space-24: 96px;
 
   /* Radius */
   --mp-radius-xs: 6px;
@@ -145,6 +150,7 @@
   --mp-button-height-web: 40px;
   --mp-button-height-mobile: 46px;
   --mp-button-height-mobile-bar: 50px;
+  --mp-button-height-large: 48px;
   --mp-input-height: 44px;
   --mp-segment-height: 36px;
   --mp-focus-ring: 2px solid var(--mp-brand-default);
@@ -153,6 +159,15 @@
   /* Motion */
   --mp-duration: 150ms;
   --mp-easing: cubic-bezier(0, 0, 0.2, 1);
+  /* Landing and sign-in only (DESIGN_SPEC §2.5.1) */
+  --mp-motion-reveal: 700ms;
+  --mp-motion-stagger: 80ms;
+  --mp-motion-loop: 6s;
+  --mp-motion-ambient: 42s;
+  --mp-motion-easing-emphasis: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* All screens: press feedback (DESIGN_SPEC §2.5.2) */
+  --mp-motion-press: 0.97;
+  --mp-motion-press-soft: 0.985;
 }
 
 /* Breakpoints (custom properties can't be used in media queries):
@@ -163,5 +178,7 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --mp-duration: 0ms;
+    --mp-motion-reveal: 0ms;
+    --mp-motion-stagger: 0ms;
   }
 }

@@ -20,6 +20,7 @@
   color: var(--mp-text-primary);
   font: var(--mp-type-body);
   text-decoration: none;
+  transition: transform var(--mp-duration) var(--mp-easing);
 }
 
 .row:focus-visible {
@@ -71,4 +72,11 @@
   align-items: flex-end;
   gap: var(--mp-space-1);
   text-align: right;
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .row:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press-soft));
+  }
 }

@@ -133,7 +133,7 @@ export function InviteAccept() {
   if (mode !== "choose") {
     return (
       <>
-        <SignInFlow key={mode} initialStep={mode} onSignedIn={() => undefined} />
+        <SignInFlow key={mode} initialStep={mode} onSignedIn={() => undefined} layout="card" />
         <Button variant="text" size="compact" onClick={() => setMode("choose")}>
           Back to the invitation
         </Button>

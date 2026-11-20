@@ -29,7 +29,8 @@
   cursor: pointer;
   transition:
     background-color var(--mp-duration) var(--mp-easing),
-    border-color var(--mp-duration) var(--mp-easing);
+    border-color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 .card:focus-visible {
@@ -184,4 +185,11 @@
   font: var(--mp-type-small);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .card:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press-soft));
+  }
 }

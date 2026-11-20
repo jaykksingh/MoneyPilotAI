@@ -20,7 +20,7 @@ for (const width of [1440, 390]) {
       await expect(page).toHaveScreenshot(`invite-${width}.png`, { fullPage: true });
       await page.getByRole("button", { name: "Sign in" }).click();
       await page.getByLabel("Email").fill("jordan@rivera-household.example");
-      await page.getByLabel("Password").fill("correct horse");
+      await page.getByLabel("Password", { exact: true }).fill("correct horse");
       await page.getByRole("button", { name: "Sign in", exact: true }).first().click();
       await expect(page).toHaveURL(/\/overview/);
     });

@@ -17,6 +17,21 @@ describe("Button", () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+  it("shows it is working when busy and ignores presses", async () => {
+    const onClick = vi.fn();
+    render(
+      <Button busy onClick={onClick}>
+        Signing in…
+      </Button>,
+    );
+    const button = screen.getByRole("button", { name: "Signing in…" });
+    expect(button.getAttribute("aria-busy")).toBe("true");
+    expect((button as HTMLButtonElement).disabled).toBe(true);
+    await userEvent.click(button);
+    expect(onClick).not.toHaveBeenCalled();
+    await expectNoAxeViolations(document.body);
+  });
+
   it("applies the variant classes", () => {
     render(
       <>

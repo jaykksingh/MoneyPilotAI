@@ -167,10 +167,10 @@ test.describe("Sign-in and bootstrap", () => {
     await openApp(page, "/overview", { signedIn: false });
     await expect(page).toHaveURL(/\/sign-in/);
     await page.getByLabel("Email").fill("sam@rivera-household.example");
-    await page.getByLabel("Password").fill("wrong");
+    await page.getByLabel("Password", { exact: true }).fill("wrong");
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
     await expect(errorBanner(page)).toContainText("don’t match");
-    await page.getByLabel("Password").fill("correct horse");
+    await page.getByLabel("Password", { exact: true }).fill("correct horse");
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
     await expect(page).toHaveURL(/\/overview/);
     await waitForOverview(page);
@@ -180,7 +180,7 @@ test.describe("Sign-in and bootstrap", () => {
   test("the MFA challenge, then sign out", async ({ page }) => {
     await openApp(page, "/sign-in", { signedIn: false });
     await page.getByLabel("Email").fill("sam@rivera-household.example");
-    await page.getByLabel("Password").fill("mfa");
+    await page.getByLabel("Password", { exact: true }).fill("mfa");
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
     await page.getByLabel("Authenticator code").fill("123456");
     await page.getByRole("button", { name: "Verify" }).click();

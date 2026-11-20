@@ -17,7 +17,8 @@
   cursor: pointer;
   transition:
     background-color var(--mp-duration) var(--mp-easing),
-    color var(--mp-duration) var(--mp-easing);
+    color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 .button:focus-visible,
@@ -73,6 +74,48 @@
   cursor: not-allowed;
 }
 
+/* Busy (§2.5.2): keeps the variant's colors instead of the disabled gray. */
+.primary.busy:disabled {
+  background: var(--mp-brand-default);
+  color: var(--mp-text-inverse);
+  cursor: progress;
+}
+
+.secondary.busy:disabled {
+  border-color: var(--mp-border-strong);
+  background: var(--mp-bg-surface);
+  color: var(--mp-text-primary);
+  cursor: progress;
+}
+
+.text.busy:disabled {
+  background: transparent;
+  color: var(--mp-brand-default);
+  cursor: progress;
+}
+
+.spinner {
+  flex: none;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentcolor;
+  border-top-color: transparent;
+  border-radius: var(--mp-radius-full);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spinner {
+    animation: spin calc(var(--mp-duration) * 5) linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* 36 px visual height with an invisible 44 px hit area. */
 .compact {
   height: var(--mp-segment-height);
@@ -117,7 +160,9 @@
   /* Q-045: the canvas draws web icon buttons in text.secondary. */
   color: var(--mp-text-secondary);
   cursor: pointer;
-  transition: background-color var(--mp-duration) var(--mp-easing);
+  transition:
+    background-color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 .iconButton:hover:not(:disabled) {
@@ -161,5 +206,15 @@
 
   .icon-web {
     height: var(--mp-touch-target);
+  }
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .button:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press));
+  }
+  .iconButton:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press));
   }
 }

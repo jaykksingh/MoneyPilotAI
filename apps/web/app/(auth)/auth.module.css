@@ -1,4 +1,7 @@
-/* Sign-in screens: one centered card on the canvas, built from UI kit components. */
+/* Sign in and create account (DESIGN_SPEC §5.1.2): a split screen, form on one side and the navy brand
+   panel on the other. The invite page keeps the centered card (.page / .card). Motion per §2.5.1. */
+
+/* ---------- Centered card (invite page) ---------- */
 
 .page {
   display: flex;
@@ -11,21 +14,13 @@
   background: var(--mp-bg-canvas);
 }
 
-.brand {
+.brand,
+.brand:hover {
   display: flex;
   align-items: center;
   gap: var(--mp-space-2_5);
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--mp-radius-md);
-  background: var(--mp-brand-default);
-  color: var(--mp-text-inverse);
+  color: var(--mp-text-primary);
+  text-decoration: none;
 }
 
 .wordmark {
@@ -43,7 +38,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--mp-space-4);
+  gap: var(--mp-space-5);
 }
 
 .lead {
@@ -55,14 +50,15 @@
 .links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--mp-space-2);
+  align-items: center;
+  gap: var(--mp-space-1);
 }
 
 .divider {
   display: flex;
   align-items: center;
   gap: var(--mp-space-3);
+  margin: 0;
   font: var(--mp-type-caption);
   color: var(--mp-text-muted);
 }
@@ -92,4 +88,862 @@
   font: var(--mp-type-body);
   font-weight: 600;
   color: var(--mp-brand-default);
+}
+
+/* ---------- Split screen ---------- */
+
+.split {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  background: var(--mp-bg-surface);
+  color: var(--mp-text-primary);
+}
+
+.formSide {
+  display: flex;
+  flex: 1 1 480px;
+  flex-direction: column;
+  gap: var(--mp-space-7);
+  min-width: 0;
+  box-sizing: border-box;
+  padding: var(--mp-space-7) var(--mp-space-4) var(--mp-space-10);
+}
+
+@media (min-width: 800px) {
+  .formSide {
+    padding-inline: var(--mp-space-14);
+  }
+}
+
+.topBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mp-space-3);
+}
+
+.mobileBrand {
+  display: none;
+}
+
+@media (max-width: 799px) {
+  .mobileBrand {
+    display: inline-flex;
+  }
+
+  .topBar .backLink {
+    display: none;
+  }
+}
+
+.backLink,
+.backLink:hover {
+  transition: transform var(--mp-duration) var(--mp-easing);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mp-space-1_5);
+  min-height: var(--mp-touch-target);
+  color: var(--mp-text-secondary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.topNote {
+  color: var(--mp-text-muted);
+  font: var(--mp-type-small);
+}
+
+.topNote a {
+  display: inline-block;
+  font-weight: 600;
+  transition: transform var(--mp-duration) var(--mp-easing);
+  text-decoration: none;
+}
+
+.topNote a:hover {
+  text-decoration: underline;
+}
+
+.formCenter {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--mp-space-6);
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-7);
+  width: 100%;
+  max-width: 400px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-2);
+}
+
+.title {
+  margin: 0;
+  font: var(--mp-type-heading-1);
+  letter-spacing: var(--mp-tracking-heading);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--mp-text-muted);
+  font: var(--mp-type-body-l);
+}
+
+.stepIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--mp-radius-xl);
+  background: var(--mp-brand-soft);
+  color: var(--mp-brand-default);
+}
+
+.googleMark {
+  flex: none;
+}
+
+.trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mp-space-1_5);
+  margin: 0;
+  color: var(--mp-text-muted);
+  font: var(--mp-type-caption);
+  text-align: center;
+}
+
+.codeInput input {
+  height: 56px;
+  font: var(--mp-type-amount-l);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--mp-tracking-overline);
+  text-align: center;
+}
+
+.resendRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mp-space-2);
+}
+
+.countdown {
+  color: var(--mp-text-muted);
+  font: var(--mp-type-small);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sign-up progress */
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-2_5);
+}
+
+.progressTrack {
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--mp-radius-full);
+  background: var(--mp-bg-track);
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: var(--mp-radius-full);
+  background: var(--mp-brand-default);
+  transition: width var(--mp-motion-reveal) var(--mp-motion-easing-emphasis);
+}
+
+.progressSteps {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mp-space-2);
+  margin: 0;
+  padding: 0;
+  color: var(--mp-text-muted);
+  font: var(--mp-type-caption);
+  font-weight: 600;
+  list-style: none;
+}
+
+.progressStep {
+  display: flex;
+  align-items: center;
+  gap: var(--mp-space-1_5);
+}
+
+.progressStepActive {
+  color: var(--mp-text-primary);
+}
+
+.progressMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--mp-radius-full);
+  background: var(--mp-bg-track);
+  color: var(--mp-text-muted);
+  font: var(--mp-type-micro);
+  font-weight: 600;
+}
+
+.progressStepActive .progressMark {
+  background: var(--mp-brand-soft);
+  color: var(--mp-brand-on-soft);
+}
+
+.progressStepDone .progressMark {
+  background: var(--mp-brand-default);
+  color: var(--mp-text-inverse);
+}
+
+/* ---------- Brand panel ---------- */
+
+.aside {
+  position: relative;
+  display: flex;
+  flex: 1 1 520px;
+  flex-direction: column;
+  gap: var(--mp-space-10);
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: var(--mp-space-10) var(--mp-space-14);
+  background: var(--mp-brand-strong);
+  color: var(--mp-text-inverse);
+}
+
+@media (max-width: 799px) {
+  .aside {
+    display: none;
+  }
+}
+
+.asideDots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--mp-chart-bar-on-strong) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  opacity: 0.55;
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 50%, var(--mp-text-primary) 45%, transparent 90%);
+  pointer-events: none;
+}
+
+.asideBrand,
+.asideBrand:hover {
+  position: relative;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: var(--mp-space-2_5);
+  color: var(--mp-text-inverse);
+  text-decoration: none;
+}
+
+.asideBody {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--mp-space-10);
+  max-width: 520px;
+}
+
+.asideHeading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-3);
+}
+
+.asideTitle {
+  margin: 0;
+  font: var(--mp-type-heading-xl);
+  letter-spacing: var(--mp-tracking-heading);
+}
+
+.asideLead {
+  margin: 0;
+  color: var(--mp-brand-on-strong-muted);
+  font: var(--mp-type-body-l);
+}
+
+.asideFoot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--mp-space-1_5);
+  margin: 0;
+  color: var(--mp-brand-on-strong-muted);
+  font: var(--mp-type-caption);
+}
+
+/* Sign-in panel: the sample plan card */
+
+.previewWrap {
+  position: relative;
+  padding-block: var(--mp-space-6) var(--mp-space-10);
+}
+
+.previewCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-4);
+  padding: var(--mp-space-5_5);
+  border-radius: var(--mp-radius-3xl);
+  background: var(--mp-bg-surface);
+  color: var(--mp-text-primary);
+  box-shadow: var(--mp-shadow-overlay);
+}
+
+.previewHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mp-space-3);
+}
+
+.overline {
+  color: var(--mp-text-muted);
+  font: var(--mp-type-overline);
+  letter-spacing: var(--mp-tracking-overline);
+  text-transform: uppercase;
+}
+
+.avatars {
+  display: inline-flex;
+}
+
+.overlap {
+  display: inline-flex;
+  margin-left: calc(var(--mp-space-2) * -1);
+}
+
+.previewFigures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--mp-space-4);
+}
+
+.previewAmountBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-0_5);
+}
+
+.previewAmount {
+  font: var(--mp-type-amount-xl);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--mp-tracking-heading);
+}
+
+.previewCaption {
+  color: var(--mp-text-muted);
+  font: var(--mp-type-small);
+}
+
+.previewMini {
+  flex: 0 1 200px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--mp-border-divider);
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--mp-space-3);
+  padding-block: var(--mp-space-2_5);
+  border-bottom: 1px solid var(--mp-border-divider);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.dateBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+}
+
+.dateWeekday {
+  color: var(--mp-text-muted);
+  font: var(--mp-type-micro);
+}
+
+.dateDay {
+  font-weight: 700;
+}
+
+.rowName {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mp-space-2);
+  font-weight: 600;
+}
+
+.rowAmount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Floating chips */
+
+.chip {
+  position: absolute;
+}
+
+.chipBottomRight {
+  right: 0;
+  bottom: 0;
+}
+
+.chipTopLeft {
+  top: 0;
+  left: 0;
+}
+
+.chipBody {
+  display: flex;
+  align-items: center;
+  gap: var(--mp-space-2_5);
+  padding: var(--mp-space-2_5) var(--mp-space-3_5) var(--mp-space-2_5) var(--mp-space-2_5);
+  border-radius: var(--mp-radius-xl);
+  background: var(--mp-bg-surface);
+  color: var(--mp-text-primary);
+  box-shadow: var(--mp-shadow-overlay);
+}
+
+.chipPill {
+  gap: var(--mp-space-2);
+  padding: var(--mp-space-2) var(--mp-space-3);
+  border-radius: var(--mp-radius-full);
+  font: var(--mp-type-caption);
+  font-weight: 600;
+}
+
+.chipIcon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mp-radius-md);
+  background: var(--mp-info-soft);
+  color: var(--mp-info-text);
+}
+
+.chipText {
+  display: flex;
+  flex-direction: column;
+}
+
+.chipStrong {
+  font: var(--mp-type-small);
+  font-weight: 600;
+}
+
+.chipMeta {
+  color: var(--mp-text-muted);
+  font: var(--mp-type-caption);
+}
+
+.chipAccent {
+  color: var(--mp-brand-default);
+}
+
+/* Sign-up panel: the three-step timeline */
+
+.timelineWrap {
+  position: relative;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-7);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timelineTrack,
+.timelineFill {
+  position: absolute;
+  top: var(--mp-space-2_5);
+  bottom: var(--mp-space-2_5);
+  left: var(--mp-space-2_5);
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+.timelineTrack {
+  background: var(--mp-brand-strong-divider);
+}
+
+.timelineFill {
+  background: var(--mp-brand-on-strong-muted);
+  transform-origin: top;
+}
+
+.timelineItem {
+  position: relative;
+  display: flex;
+  gap: var(--mp-space-4);
+}
+
+.timelineDot {
+  flex: none;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 4px solid var(--mp-brand-strong);
+  border-radius: var(--mp-radius-full);
+  background: var(--mp-text-inverse);
+}
+
+.timelineText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-0_5);
+}
+
+.timelineTitle {
+  font: var(--mp-type-title);
+}
+
+.timelineBody {
+  color: var(--mp-brand-on-strong-muted);
+  font: var(--mp-type-small);
+}
+
+.inviteChip {
+  align-self: flex-start;
+}
+
+/* ---------- Signed-in moment (§2.5.2) ---------- */
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--mp-space-6);
+}
+
+.successMark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--mp-radius-full);
+  background: var(--mp-brand-default);
+  color: var(--mp-text-inverse);
+}
+
+.successMark::after {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--mp-brand-default);
+  border-radius: inherit;
+  content: "";
+  opacity: 0;
+}
+
+.successBar {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--mp-radius-full);
+  background: var(--mp-bg-track);
+}
+
+.successFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--mp-brand-default);
+  transform-origin: left;
+}
+
+/* ---------- Motion (§2.5.1) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .in {
+    animation: rise var(--mp-motion-reveal) var(--mp-motion-easing-emphasis) both;
+    animation-delay: calc(var(--mp-motion-stagger) * var(--step, 0));
+  }
+
+  .slide {
+    animation: slide var(--mp-motion-reveal) var(--mp-motion-easing-emphasis) both;
+    animation-delay: calc(var(--mp-motion-stagger) * var(--step, 0));
+  }
+
+  .asideDots {
+    animation: drift calc(var(--mp-motion-loop) * 1.5) linear infinite;
+  }
+
+  .float {
+    animation: float var(--mp-motion-loop) ease-in-out infinite;
+    animation-delay: calc(var(--mp-motion-loop) / 4 * var(--step, 0));
+  }
+
+  .timelineFill {
+    animation: fill-y calc(var(--mp-motion-loop) * 7 / 6) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .timelineDot {
+    animation: light calc(var(--mp-motion-loop) * 7 / 6) linear infinite both;
+    animation-delay: calc(var(--mp-motion-loop) / 4 * var(--step, 0));
+  }
+
+  .backLink:active,
+  .topNote a:active,
+  .asideBrand:active {
+    transform: scale(var(--mp-motion-press));
+  }
+
+  .bounce {
+    animation: bounce calc(var(--mp-motion-loop) * 0.4) ease-in-out infinite;
+  }
+
+  .shake {
+    animation: shake calc(var(--mp-motion-reveal) * 0.6) cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Banners drop in; a new error replays it. */
+  .drop {
+    animation: drop calc(var(--mp-motion-reveal) * 0.6) var(--mp-motion-easing-emphasis) both;
+  }
+
+  .successMark {
+    animation: burst calc(var(--mp-motion-reveal) * 0.8) var(--mp-motion-easing-emphasis) both;
+  }
+
+  .successMark::after {
+    animation: halo calc(var(--mp-motion-reveal) * 1.4) ease-out calc(var(--mp-motion-stagger) * 3) both;
+  }
+
+  .successCheck {
+    stroke-dasharray: 1;
+    animation: check calc(var(--mp-motion-reveal) * 0.7) var(--mp-motion-easing-emphasis)
+      calc(var(--mp-motion-stagger) * 3) both;
+  }
+
+  .successFill {
+    animation: fill-x calc(var(--mp-motion-reveal) * 1.55) linear both;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--mp-space-7));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--mp-space-4) * -1));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 48px 48px;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(calc(var(--mp-space-2_5) * -1));
+  }
+}
+
+@keyframes fill-y {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) scaleY(0);
+  }
+
+  45%,
+  85% {
+    opacity: 1;
+    transform: translateX(-50%) scaleY(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+
+@keyframes light {
+  0%,
+  2% {
+    background: var(--mp-brand-strong-divider);
+  }
+
+  6%,
+  90% {
+    background: var(--mp-text-inverse);
+  }
+
+  100% {
+    background: var(--mp-brand-strong-divider);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(calc(var(--mp-space-1_5) * -1)) rotate(-6deg);
+  }
+
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  75% {
+    transform: translateY(calc(var(--mp-space-1) * -0.75)) rotate(4deg);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(calc(var(--mp-space-1_5) * -1));
+  }
+
+  40%,
+  80% {
+    transform: translateX(var(--mp-space-1_5));
+  }
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--mp-space-2) * -1));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes burst {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes halo {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+@keyframes check {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill-x {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
 }

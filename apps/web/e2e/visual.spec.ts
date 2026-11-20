@@ -59,7 +59,7 @@ test.describe("states", () => {
 
   test("Sign in", async ({ page }) => {
     await openApp(page, "/sign-in", { signedIn: false });
-    await page.getByRole("heading", { name: "Sign in" }).waitFor();
+    await page.getByRole("heading", { name: "Welcome back" }).waitFor();
     await page.evaluate(() => document.fonts.ready);
     await expect(page).toHaveScreenshot("sign-in-1440.png", { fullPage: true });
   });

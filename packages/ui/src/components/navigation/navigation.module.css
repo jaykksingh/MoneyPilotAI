@@ -52,7 +52,8 @@
   text-decoration: none;
   transition:
     background-color var(--mp-duration) var(--mp-easing),
-    color var(--mp-duration) var(--mp-easing);
+    color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 .item:hover {
@@ -114,9 +115,20 @@
   font: var(--mp-type-micro);
   font-weight: 400;
   text-decoration: none;
+  transition: transform var(--mp-duration) var(--mp-easing);
 }
 
 .tabCurrent {
   color: var(--mp-brand-default);
   font-weight: 600;
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .item:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press-soft));
+  }
+  .tab:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press));
+  }
 }

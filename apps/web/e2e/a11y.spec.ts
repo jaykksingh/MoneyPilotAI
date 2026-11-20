@@ -55,7 +55,19 @@ for (const width of [1440, 390]) {
 
     test("Sign in", async ({ page }) => {
       await openApp(page, "/sign-in", { signedIn: false });
-      await page.getByRole("heading", { name: "Sign in" }).waitFor();
+      await page.getByRole("heading", { name: "Welcome back" }).waitFor();
+      await expectNoViolations(page);
+    });
+
+    test("Create account", async ({ page }) => {
+      await openApp(page, "/sign-up", { signedIn: false });
+      await page.getByRole("heading", { name: "Create your account" }).waitFor();
+      await expectNoViolations(page);
+    });
+
+    test("Landing page", async ({ page }) => {
+      await openApp(page, "/", { signedIn: false });
+      await page.getByRole("heading", { level: 1 }).waitFor();
       await expectNoViolations(page);
     });
   });

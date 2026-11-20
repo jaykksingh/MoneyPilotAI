@@ -103,6 +103,12 @@ function mapToken(path: string[], value: Json): Mapping {
       if (a === "duration" && path.length === 2) return { name: "--mp-duration", value: asText(value) };
       if (a === "easing" && path.length === 2)
         return { name: "--mp-easing", value: `cubic-bezier(${asText(value)})` };
+      // Landing and sign-in motion (DESIGN_SPEC §2.5.1): `motion.reveal` → `--mp-motion-reveal`.
+      if (a && path.length === 2)
+        return {
+          name: `--mp-motion-${kebab(a)}`,
+          value: Array.isArray(value) ? `cubic-bezier(${asText(value)})` : asText(value),
+        };
       return "unmapped";
     default:
       return "unmapped";
