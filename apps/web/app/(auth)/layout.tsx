@@ -1,17 +1,7 @@
-import { Compass } from "lucide-react";
 import type { ReactNode } from "react";
-import styles from "./auth.module.css";
 
+// Each auth page brings its own frame: the split screen for sign in and create account (AuthSplit),
+// the centered card for the invite page (AuthCardPage). DESIGN_SPEC §5.1.2.
 export default function AuthLayout({ children }: { children: ReactNode }) {
-  return (
-    <main className={styles.page}>
-      <div className={styles.brand}>
-        <span className={styles.logo} aria-hidden="true">
-          <Compass size={20} strokeWidth={2} />
-        </span>
-        <h1 className={styles.wordmark}>MoneyPilot</h1>
-      </div>
-      {children}
-    </main>
-  );
+  return <>{children}</>;
 }

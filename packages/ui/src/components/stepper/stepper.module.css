@@ -33,7 +33,9 @@
   color: var(--mp-text-primary);
   font: var(--mp-type-body);
   cursor: pointer;
-  transition: background-color var(--mp-duration) var(--mp-easing);
+  transition:
+    background-color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 .step:hover:not([aria-disabled="true"]) {
@@ -61,4 +63,11 @@
   font: var(--mp-type-amount-l);
   font-variant-numeric: tabular-nums;
   color: var(--mp-text-primary);
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .step:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press));
+  }
 }

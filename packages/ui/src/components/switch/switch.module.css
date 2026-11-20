@@ -11,7 +11,9 @@
   border-radius: var(--mp-radius-full);
   background: var(--mp-control-off);
   cursor: pointer;
-  transition: background-color var(--mp-duration) var(--mp-easing);
+  transition:
+    background-color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 /* 32 px tall control, 44 px hit area. */
@@ -84,4 +86,11 @@
 .description {
   font: var(--mp-type-caption);
   color: var(--mp-text-muted);
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .switch:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press));
+  }
 }

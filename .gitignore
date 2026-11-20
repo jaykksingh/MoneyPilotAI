@@ -14,9 +14,34 @@ playwright-report/
 .env.*
 !.env.example
 
-# Claude Code local settings
-.claude/settings.local.json
-.claude/worktrees/
+# AI agent files and folders (kept local only)
+.claude/
+.agents/
+.codex/
+.cursor/
+.cursorrules
+.windsurf/
+.windsurfrules
+.aider*
+.gemini/
+.copilot/
+.clinerules
+.roo/
+.continue/
+.github/copilot-instructions.md
+.github/agents/
+.github/prompts/
+.github/instructions/
+.github/chatmodes/
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
+GEMINI.md
+docs/agents/
+
+# Supabase CLI local state (linked project ref, CLI version)
+supabase/.temp/
+
 *.tsbuildinfo
 
 # Keys and credentials

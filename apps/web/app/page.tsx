@@ -1,6 +1,13 @@
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { Landing } from "../lib/landing/Landing";
 
-// The Overview is the home screen (DESIGN_SPEC §5.1).
-export default function Home(): never {
-  redirect("/overview");
+// The public landing page (DESIGN_SPEC §5.1.1). Signed-in people get "Open MoneyPilot" in the header.
+export const metadata: Metadata = {
+  title: { absolute: "MoneyPilot · Plan before payday, together" },
+  description:
+    "See every bill due before your next paycheck, how much is safe to spend, and who owns what. Read-only: MoneyPilot never moves money.",
+};
+
+export default function Home() {
+  return <Landing />;
 }

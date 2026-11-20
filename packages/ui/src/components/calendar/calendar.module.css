@@ -20,7 +20,9 @@
   font: var(--mp-type-micro);
   text-align: left;
   cursor: pointer;
-  transition: background-color var(--mp-duration) var(--mp-easing);
+  transition:
+    background-color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 .cell:focus-visible {
@@ -160,4 +162,11 @@
   font: var(--mp-type-micro);
   font-weight: 600;
   color: var(--mp-text-muted);
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .cell:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press-soft));
+  }
 }

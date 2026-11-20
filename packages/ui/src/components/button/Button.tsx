@@ -17,6 +17,12 @@ interface CommonProps extends NativeButton {
   size?: ButtonSize;
   /** A 16 px leading icon (gap 8). */
   icon?: LucideIcon;
+  /**
+   * Working on it (DESIGN_SPEC §2.5.2): a 16 px spinner takes the icon's place, the button keeps its
+   * colors, ignores further presses and reports `aria-busy`. Pair it with a label that says what is
+   * happening ("Signing in…").
+   */
+  busy?: boolean;
 }
 
 export type ButtonProps = CommonProps &
@@ -43,7 +49,16 @@ export type ButtonProps = CommonProps &
   );
 
 export function Button(props: ButtonProps) {
-  const { variant = "primary", size = "web", icon, className, type = "button", children, ...rest } = props;
+  const {
+    variant = "primary",
+    size = "web",
+    icon,
+    busy = false,
+    className,
+    type = "button",
+    children,
+    ...rest
+  } = props;
   const inHeader = props.variant === "secondary" ? props.inHeader : undefined;
   const label = props.variant === "destructive" ? props.label : undefined;
   const native: NativeButton & { inHeader?: boolean; label?: string } = rest;
@@ -52,10 +67,19 @@ export function Button(props: ButtonProps) {
   return (
     <button
       type={type}
-      className={cx(styles.button, styles[variant], styles[size], inHeader && styles.inHeader, className)}
+      className={cx(
+        styles.button,
+        styles[variant],
+        styles[size],
+        inHeader && styles.inHeader,
+        busy && styles.busy,
+        className,
+      )}
       {...native}
+      disabled={busy || native.disabled}
+      aria-busy={busy || undefined}
     >
-      {icon && <Icon icon={icon} size={16} />}
+      {busy ? <span className={styles.spinner} aria-hidden="true" /> : icon && <Icon icon={icon} size={16} />}
       {label ?? children}
     </button>
   );

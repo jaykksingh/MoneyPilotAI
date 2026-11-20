@@ -1,0 +1,119 @@
+/* Mini runway for the landing and sign-in pages. Colors follow §4.1: chart.* on surfaces, the
+   on-strong variants on the navy hero. Bars grow in and the lowest bar pulses (§2.5.1). */
+
+.runway {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mp-space-1_5);
+  width: 100%;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--mp-space-1_5);
+}
+
+.h56 {
+  height: 56px;
+}
+
+.h80 {
+  height: 80px;
+}
+
+.bar {
+  position: relative;
+  flex: 1;
+  border-radius: var(--mp-radius-xs) var(--mp-radius-xs) 0 0;
+}
+
+.onStrong .balance {
+  background: var(--mp-chart-bar-on-strong);
+}
+
+.onStrong .payday {
+  background: var(--mp-chart-payday-on-strong);
+}
+
+.onStrong .lowest {
+  background: var(--mp-attention-mark-on-strong);
+}
+
+.onSurface .balance {
+  background: var(--mp-chart-balance);
+}
+
+.onSurface .payday {
+  background: var(--mp-chart-payday);
+}
+
+.onSurface .lowest {
+  background: var(--mp-chart-lowest);
+}
+
+.lowest::after {
+  position: absolute;
+  inset: 0;
+  border: 2px solid currentcolor;
+  border-radius: inherit;
+  content: "";
+  opacity: 0;
+}
+
+.onStrong .lowest {
+  color: var(--mp-attention-mark-on-strong);
+}
+
+.onSurface .lowest {
+  color: var(--mp-chart-lowest);
+}
+
+.dates {
+  display: flex;
+  justify-content: space-between;
+  font: var(--mp-type-micro);
+}
+
+.onStrong .dates {
+  color: var(--mp-brand-on-strong-muted);
+}
+
+.onSurface .dates {
+  color: var(--mp-text-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bar {
+    transform-origin: bottom;
+    animation: grow calc(var(--mp-motion-reveal) * 1.3) var(--mp-motion-easing-emphasis) both;
+    animation-delay: calc(var(--mp-motion-stagger) * (7 + var(--step, 0)));
+  }
+
+  .lowest::after {
+    animation: ring calc(var(--mp-motion-loop) / 3) ease-out infinite;
+    animation-delay: calc(var(--mp-motion-reveal) * 3);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes ring {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}

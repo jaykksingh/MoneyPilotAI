@@ -1,0 +1,68 @@
+/* Logo mark, DESIGN_SPEC §2.4. Needle motion is for the landing and sign-in pages only (§2.5.1). */
+
+.mark {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mp-radius-md);
+  background: var(--mp-brand-default);
+  color: var(--mp-text-inverse);
+}
+
+.size28 {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--mp-radius-sm);
+}
+
+.size36 {
+  width: 36px;
+  height: 36px;
+}
+
+.size72 {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--mp-radius-3xl);
+}
+
+.needle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .settle {
+    animation: settle calc(var(--mp-motion-reveal) * 2) var(--mp-motion-easing-emphasis) both;
+  }
+
+  .sway {
+    animation: sway var(--mp-motion-loop) ease-in-out infinite;
+  }
+}
+
+@keyframes settle {
+  0% {
+    transform: rotate(-140deg);
+  }
+
+  60% {
+    transform: rotate(20deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-16deg);
+  }
+
+  50% {
+    transform: rotate(16deg);
+  }
+}

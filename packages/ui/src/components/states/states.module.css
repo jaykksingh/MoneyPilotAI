@@ -70,6 +70,7 @@
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
+  transition: transform var(--mp-duration) var(--mp-easing);
 }
 
 .retry::after {
@@ -108,5 +109,12 @@
   .retry {
     display: inline-block;
     padding-block: var(--mp-space-3_5);
+  }
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .retry:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press));
   }
 }

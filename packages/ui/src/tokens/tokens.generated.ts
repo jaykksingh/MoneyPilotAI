@@ -90,6 +90,20 @@ export const tokens = {
     },
   },
   typography: {
+    "display-2xl": {
+      fontFamily: ["Manrope", "Inter", "system-ui", "sans-serif"],
+      fontWeight: 800,
+      fontSize: "64px",
+      lineHeight: "68px",
+      letterSpacing: "-0.03em",
+    },
+    "heading-xl": {
+      fontFamily: ["Manrope", "Inter", "system-ui", "sans-serif"],
+      fontWeight: 800,
+      fontSize: "44px",
+      lineHeight: "50px",
+      letterSpacing: "-0.02em",
+    },
     "display-xl": {
       fontFamily: ["Manrope", "Inter", "system-ui", "sans-serif"],
       fontWeight: 800,
@@ -160,6 +174,13 @@ export const tokens = {
       lineHeight: "21px",
       letterSpacing: "0",
     },
+    lead: {
+      fontFamily: ["Inter", "system-ui", "sans-serif"],
+      fontWeight: 400,
+      fontSize: "18px",
+      lineHeight: "28px",
+      letterSpacing: "0",
+    },
     "body-l": {
       fontFamily: ["Inter", "system-ui", "sans-serif"],
       fontWeight: 400,
@@ -220,6 +241,8 @@ export const tokens = {
     "7": "28px",
     "10": "40px",
     "14": "56px",
+    "18": "72px",
+    "24": "96px",
     "0_5": "2px",
     "1_5": "6px",
     "2_5": "10px",
@@ -250,6 +273,7 @@ export const tokens = {
     buttonHeightWeb: "40px",
     buttonHeightMobile: "46px",
     buttonHeightMobileBar: "50px",
+    buttonHeightLarge: "48px",
     inputHeight: "44px",
     segmentHeight: "36px",
     iconNav: "18px",
@@ -269,6 +293,13 @@ export const tokens = {
   motion: {
     duration: "150ms",
     easing: [0, 0, 0.2, 1],
+    reveal: "700ms",
+    stagger: "80ms",
+    loop: "6s",
+    ambient: "42s",
+    easingEmphasis: [0.2, 0.7, 0.2, 1],
+    press: 0.97,
+    pressSoft: 0.985,
   },
 } as const;
 
@@ -365,6 +396,14 @@ export const cssVar = {
     },
   },
   typography: {
+    "display-2xl": {
+      font: "var(--mp-type-display-2xl)",
+      letterSpacing: "var(--mp-tracking-display-xl)",
+    },
+    "heading-xl": {
+      font: "var(--mp-type-heading-xl)",
+      letterSpacing: "var(--mp-tracking-heading)",
+    },
     "display-xl": {
       font: "var(--mp-type-display-xl)",
       letterSpacing: "var(--mp-tracking-display-xl)",
@@ -403,6 +442,10 @@ export const cssVar = {
     },
     title: {
       font: "var(--mp-type-title)",
+      letterSpacing: "0",
+    },
+    lead: {
+      font: "var(--mp-type-lead)",
       letterSpacing: "0",
     },
     "body-l": {
@@ -444,6 +487,8 @@ export const cssVar = {
     "7": "var(--mp-space-7)",
     "10": "var(--mp-space-10)",
     "14": "var(--mp-space-14)",
+    "18": "var(--mp-space-18)",
+    "24": "var(--mp-space-24)",
     "0_5": "var(--mp-space-0_5)",
     "1_5": "var(--mp-space-1_5)",
     "2_5": "var(--mp-space-2_5)",
@@ -474,6 +519,7 @@ export const cssVar = {
     buttonHeightWeb: "var(--mp-button-height-web)",
     buttonHeightMobile: "var(--mp-button-height-mobile)",
     buttonHeightMobileBar: "var(--mp-button-height-mobile-bar)",
+    buttonHeightLarge: "var(--mp-button-height-large)",
     inputHeight: "var(--mp-input-height)",
     segmentHeight: "var(--mp-segment-height)",
     focusRing: "var(--mp-focus-ring)",
@@ -489,6 +535,13 @@ export const cssVar = {
   motion: {
     duration: "var(--mp-duration)",
     easing: "var(--mp-easing)",
+    reveal: "var(--mp-motion-reveal)",
+    stagger: "var(--mp-motion-stagger)",
+    loop: "var(--mp-motion-loop)",
+    ambient: "var(--mp-motion-ambient)",
+    easingEmphasis: "var(--mp-motion-easing-emphasis)",
+    press: "var(--mp-motion-press)",
+    pressSoft: "var(--mp-motion-press-soft)",
   },
 } as const;
 

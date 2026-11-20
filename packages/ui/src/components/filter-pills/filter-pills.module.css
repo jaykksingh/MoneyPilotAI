@@ -22,7 +22,8 @@
   cursor: pointer;
   transition:
     background-color var(--mp-duration) var(--mp-easing),
-    color var(--mp-duration) var(--mp-easing);
+    color var(--mp-duration) var(--mp-easing),
+    transform var(--mp-duration) var(--mp-easing);
 }
 
 .pill::after {
@@ -55,5 +56,12 @@
 @media (pointer: coarse) {
   .pill {
     height: var(--mp-touch-target);
+  }
+}
+
+/* Press feedback: the control dips while pressed (DESIGN_SPEC §2.5.2). */
+@media (prefers-reduced-motion: no-preference) {
+  .pill:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(var(--mp-motion-press));
   }
 }
