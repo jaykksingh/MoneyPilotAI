@@ -26,7 +26,7 @@ export function familyPlusPrice(period: BillingPeriod): { price: string; per: st
 
 export const FREE_FEATURES = [
   "One household",
-  "Shared bills calendar",
+  "Bills calendar",
   "Manual entry and CSV import",
   "Your own forwarding address",
 ] as const;

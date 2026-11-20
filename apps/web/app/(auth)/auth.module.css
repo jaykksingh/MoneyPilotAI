@@ -272,7 +272,12 @@
   height: 100%;
   border-radius: var(--mp-radius-full);
   background: var(--mp-brand-default);
-  transition: width var(--mp-motion-reveal) var(--mp-motion-easing-emphasis);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .progressFill {
+    transition: width var(--mp-motion-reveal) var(--mp-motion-easing-emphasis);
+  }
 }
 
 .progressSteps {

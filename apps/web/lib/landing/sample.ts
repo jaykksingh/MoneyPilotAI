@@ -18,6 +18,7 @@ export const SAMPLE = {
   payday: "2026-11-06",
   daysToPayday: 10,
   safeToSpendCents: 100_701,
+  /** The engine’s per-day cents; only the display rounds it (“≈ $100 a day”, §6, §7). */
   perDayCents: 10_070,
   cushionCents: 50_000,
   lowest: { date: "2026-11-05", balanceCents: 150_701 },

@@ -611,14 +611,20 @@
   );
 }
 
+/* At rest (reduced motion) the pills wrap and center, so none is clipped; the copy is only for the loop. */
 .tickerTrack {
   display: flex;
-  gap: var(--mp-space-2_5);
-  width: max-content;
+  justify-content: center;
+}
+
+.tickerTrack > .tickerList:last-child {
+  display: none;
 }
 
 .tickerList {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--mp-space-2_5);
   margin: 0;
   padding: 0;
@@ -1334,7 +1340,18 @@
   }
 
   .tickerTrack {
+    gap: var(--mp-space-2_5);
+    justify-content: flex-start;
+    width: max-content;
     animation: marquee var(--mp-motion-ambient) linear infinite;
+  }
+
+  .tickerTrack > .tickerList:last-child {
+    display: flex;
+  }
+
+  .tickerList {
+    flex-wrap: nowrap;
   }
 
   .tickerViewport:hover .tickerTrack {
