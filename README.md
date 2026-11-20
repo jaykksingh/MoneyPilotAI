@@ -114,7 +114,6 @@ pnpm contracts:gen    # regenerate the OpenAPI spec and typed client
 | [`docs/BACKEND_PLAN.md`](docs/BACKEND_PLAN.md) | Schema, API, jobs, email pipeline, AI and security |
 | [`docs/architecture/ARCHITECTURE.md`](docs/architecture/ARCHITECTURE.md) | System context, containers, flows and module boundaries |
 | [`docs/architecture/DECISIONS.md`](docs/architecture/DECISIONS.md) | Architecture decision records |
-| [`CLAUDE.md`](CLAUDE.md) | Rules and conventions for contributors and coding agents |
 
 ## License
 
