@@ -117,4 +117,4 @@ pnpm contracts:gen    # regenerate the OpenAPI spec and typed client
 
 ## License
 
-No license has been chosen yet. Until one is added, all rights are reserved.
+Released under the [MIT License](LICENSE).
