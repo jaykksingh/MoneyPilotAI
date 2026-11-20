@@ -39,6 +39,9 @@ CLAUDE.local.md
 GEMINI.md
 docs/agents/
 
+# Supabase CLI local state (linked project ref, CLI version)
+supabase/.temp/
+
 *.tsbuildinfo
 
 # Keys and credentials
